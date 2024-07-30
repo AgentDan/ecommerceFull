@@ -1,21 +1,39 @@
 import ReactCardFlip from "react-card-flip"
-import {StateLight} from "../../state/stateLight"
-import React, {useEffect, useState} from "react"
+import React, {createContext, useCallback, useContext, useEffect, useState} from "react"
 import {useNavigate, Link} from "react-router-dom"
 import Contacts from "../Contacts/Contacts"
 import {Menu} from "../Menu/Menu"
-import {StateGlobal} from "../../state/stateGlobal"
+import axios from "axios";
 
-const Chair = ({project, currentLang}) => {
-    const [components, setComponents] = useState(StateGlobal)
-    const componentsCurrent = []
-    components.map((t) => t.project === project ? componentsCurrent.push(t) : "")
+const Lamp = ({project, currentLang}) => {
+    // const [stateFull, setStateFull] = useState(StateGlobal)
+    const [stateFull, setStateFull] = useState([])
+
+    const getState = useCallback(async () => {
+        try {
+            await axios.get('/api/', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((response) => setStateFull(response.data))
+        } catch (error) {
+            console.log( error)
+        }
+    }, [])
+
     useEffect(() => {
-        setComponents(componentsCurrent)
+        getState()
+    }, [])
+
+    const a = []
+    useEffect(() => {
+        if (stateFull !==undefined)  {stateFull.map((t) => t.project === project ? a.push(t) : "")}
+        setStateFull(a)
     }, [])
 
     const clickFlipped = (id, check) => {
-        setComponents(components.map(t => t.id === id ? {...t, check} : t))
+        setStateFull(stateFull.map(t => t._id === id ? {...t, check} : t))
     }
     const [open, setOpen] = useState(false)
     const [fullScreenImgPath, setFullScreenImgPath] = useState("")
@@ -24,7 +42,7 @@ const Chair = ({project, currentLang}) => {
         setFullScreenImgPath(pathFullScreenImg)
     }
     const onClickImages = (idComp) => {
-        setComponents(components.map(t => t.id !== idComp
+        setStateFull(stateFull.map(t => t._id !== idComp
                 ? t
                 : t.imagesCounter > t.images.length-2
                     ? {...t, imagesCounter: 0}
@@ -34,14 +52,14 @@ const Chair = ({project, currentLang}) => {
     }
 
     const comp =
-        components.map((i, index) => {
+        stateFull.map((i, index) => {
 
             const onClickButton = () => {
-                clickFlipped(i.id, !i.check)
+                clickFlipped(i._id, !i.check)
             }
 
             return (
-                <div key={i.id}>
+                <div key={i._id}>
                     {i.images[0] ?
                         <ReactCardFlip isFlipped={i.check} flipDirection={"horizontal"}>
                             <div className="card h-3/4 bg-white p-2">
@@ -56,11 +74,11 @@ const Chair = ({project, currentLang}) => {
                                     <div className="h-auto flex flex-row gap-2 p-2">
                                         <div
                                             className="h-auto w-1/2 rounded-lg bg-gray-500 text-white content-center text-center text-2xl cursor-pointer"
-                                            onClick={() => onClickImages(i.id)}
+                                            onClick={() => onClickImages(i._id)}
                                         >
                                             IMAGES
                                         </div>
-                                        <Link to={`/project/${i.id}/`}
+                                        <Link to={`/project/${i._id}/`}
                                               className="h-12 w-1/2 text-2xl text-white pt-1 content-center text-center cursor-pointer bg-blue-600 rounded-lg"
                                         >
                                             <span className="text-3xs">3D models </span>
@@ -131,4 +149,4 @@ const Chair = ({project, currentLang}) => {
         </>
     )
 }
-export default Chair
+export default Lamp

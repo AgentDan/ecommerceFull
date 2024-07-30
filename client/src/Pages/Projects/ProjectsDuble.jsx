@@ -1,39 +1,21 @@
 import {StateLight} from "../../state/stateLight"
 import {StateGlobal} from "../../state/stateGlobal"
-import {useCallback, useEffect, useState} from "react"
+import {useEffect, useState} from "react"
 import {useParams} from "react-router-dom"
 import PanelElementsVariantsTailwindMax from "./panel/PanelElementsVariantsTailwindMAX"
 import {Canvas} from "@react-three/fiber"
 import {Experience} from "./Experience"
-import axios from "axios";
 
 const Projects = () => {
     const {id} = useParams()
     const [myElements, setMyElements] = useState([])
-    const [stateFull, setStateFull] = useState([])
+    let elements = []
 
-    const getState = useCallback(async () => {
-        try {
-            await axios.get('/api/', {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then((response) => setStateFull(response.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
 
+    StateGlobal.map((t) => t.id === id ? elements = t.components : "")
     useEffect(() => {
-        getState()
+        setMyElements(elements)
     }, [])
-
-    useEffect(() => {
-        let a = []
-        stateFull.map((t) => t._id === id ? a = t.components : "")
-        setMyElements(a)
-    }, [stateFull])
 
     return (
         <>
