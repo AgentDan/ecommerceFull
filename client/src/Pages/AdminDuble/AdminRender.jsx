@@ -1,7 +1,18 @@
 import React, {useCallback} from 'react'
 import {v1} from "uuid"
+import axios from "axios"
+import {GetStateCloud} from "./AdminAPI"
 
 const AdminRender = ({projects, currentProject, setCurrentProject, setStateGlobal}) => {
+    // const onClickDelProject = useCallback(async (project) => {
+    //     try {
+    //         await axios.delete(`/api/delproject/${project}`, {project}, {
+    //             headers: {'Content-Type': 'application/json'}
+    //         })
+    //             .then((response) => setStateGlobal(response.data))
+    //     } catch (error) {
+    //     }
+    // }, [])
 
     return (
         <>
@@ -26,6 +37,7 @@ const AdminRender = ({projects, currentProject, setCurrentProject, setStateGloba
             </div>
         </>
     )
+
 }
 
 export default AdminRender

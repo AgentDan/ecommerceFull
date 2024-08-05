@@ -6,7 +6,7 @@ const PanelElementsVariantsTailwindMax = ({myElements, setMyElements}) => {
     const navigate = useNavigate()
     const goBack = () => navigate(-1)
     const myOnClick = (id) => {
-        setMyElements(myElements.map(t => t.id === id ? {...t, check: true} : {...t, check: false}))
+        setMyElements(myElements.map(t => t._id === id ? {...t, check: true} : {...t, check: false}))
     }
 
     return (
@@ -28,7 +28,7 @@ const PanelElementsVariantsTailwindMax = ({myElements, setMyElements}) => {
                                 >
                                 <span
                                     className={i.check === true ? "bg-gray-400 text-white" : ""}
-                                    onClick={e => myOnClick(i.id)}
+                                    onClick={e => myOnClick(i._id)}
                                 >
                                     {i.name}
                                 </span>

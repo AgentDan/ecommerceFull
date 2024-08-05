@@ -14,17 +14,16 @@ const Admin3DFiles = ({currentFiles, setCurrentFiles}) => {
             </div>
             {currentFiles.map((t) => {
                 return (
-                    <div key={v1()}
-                         className={`w-auto h-8 pr-6 m-1 rounded-2xl content-start border-2 border-black text-left relative `}
-                    >
-                        <div
-                            className={`h-auto w-auto text-white text-xl px-2 rounded-tl-2xl rounded-bl-2xl bg-gray-400 top-0 left-0 `}
-                            key={v1()}
-                        >
+                    <div key={v1()} className="h-8 flex flex-row text-xl border-black border-2 mb-1">
+                        <div className="w-5/6 text-left content-center ">
                             {t}
                         </div>
+                        <div
+                            className="mx-auto w-8 content-center text-center text-red-700 hover:bg-red-800 hover:text-white cursor-pointer"
+                        >
+                            X
+                        </div>
                     </div>
-
                 )
             })}
         </>

@@ -9,14 +9,14 @@ const Admin3dModel = ({currentModels, localModel, setLocalModel}) => {
             </div>
             {currentModels.map((t) => {
                 return (
-                    <div key={v1()}
-                         className={`w-auto h-8 pr-6 m-1 rounded-2xl content-start border-2 border-black text-left relative `}
-                    >
-                        <div
-                            className={`h-auto w-auto text-xl text-white px-2 rounded-tl-2xl rounded-bl-2xl bg-gray-400 top-0 left-0 cursor-pointer hover:bg-green-600 ${localModel && localModel._id === t._id ? "bg-green-600" : ""}`}
-                            onClick={() => setLocalModel(t)}
+                    <div key={v1()} className="h-8 flex flex-row text-xl border-black border-2 mb-1">
+                        <div className={`w-5/6 text-left content-center cursor-pointer ${localModel && localModel._id === t._id ? "bg-green-600" : ""}`}
+                             onClick={()=>setLocalModel(t)}
                         >
                             {t.name}
+                        </div>
+                        <div className="mx-auto w-8 content-center text-center text-red-700 hover:text-white hover:bg-red-800 cursor-pointer">
+                            X
                         </div>
                     </div>
                 )

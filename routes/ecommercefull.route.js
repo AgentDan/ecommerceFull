@@ -2,7 +2,7 @@ const {Router} = require("express")
 const router = Router()
 const multer = require("multer")
 const fs = require("fs")
-const MainFull = require("../models/EcommerceFullCatalog")
+const MainEcomFull = require("../models/EcommerceFullCatalog")
 const axios = require("axios")
 
 const storageConfig = multer.diskStorage({
@@ -16,14 +16,14 @@ const storageConfig = multer.diskStorage({
 const upload = multer({storage: storageConfig})
 
 router.get("/", async (request, response) => {
-    let main = await MainFull.find()
+    let main = await MainEcomFull.find()
     response.json(main)
 })
 
 router.get('/post', async (req, res) => {
     try {
         const {userId} = req.query
-        const main = await MainFull.find({owner: userId})
+        const main = await MainEcomFull.find({owner: userId})
         res.json(main)
     } catch (error) {
         console.log(error)
@@ -32,8 +32,8 @@ router.get('/post', async (req, res) => {
 
 router.delete('/delproject/:project', async (req, res) => {
         try {
-            await MainFull.deleteMany({project: req.params.project})
-            const main = await MainFull.find()
+            await MainEcomFull.deleteMany({project: req.params.project})
+            const main = await MainEcomFull.find()
             res.json(main)
         } catch (error) {
             console.log(error)
@@ -44,8 +44,8 @@ router.delete('/delproject/:project', async (req, res) => {
 router.delete("/delImg", async (request, response) => {
     try {
         const {nameImg, localCardId} = request.query
-        await MainFull.updateMany({_id: localCardId}, {"$pull": {"images": nameImg}})
-        const main = await MainFull.find()
+        await MainEcomFull.updateMany({_id: localCardId}, {"$pull": {"images": nameImg}})
+        const main = await MainEcomFull.find()
         response.json(main)
     } catch (error) {
         console.log(error)
@@ -54,8 +54,8 @@ router.delete("/delImg", async (request, response) => {
 
 router.delete('/delcard/:id', async (req, res) => {
         try {
-            await MainFull.findOneAndDelete({_id: req.params.id})
-            const main = await MainFull.find()
+            await MainEcomFull.findOneAndDelete({_id: req.params.id})
+            const main = await MainEcomFull.find()
             res.json(main)
         } catch (error) {
             console.log(error)
@@ -63,19 +63,8 @@ router.delete('/delcard/:id', async (req, res) => {
     }
 )
 
-// router.delete('/delimg/:id', async (req, res) => {
-//         try {
-//             let mainOld = await MainFull.findOneAndDelete({_id: req.params.id})
-//             let main = await MainFull.find()
-//             res.json(mainOld)
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     }
-// )
-
 router.post("/addmainfull", upload.single("myfile"), (req, res) => {
-    const newMain = new MainFull({
+    const newMain = new MainEcomFull({
         id: req.body._id,
         name: req.body.name,
         project: req.body.project,

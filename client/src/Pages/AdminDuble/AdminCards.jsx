@@ -30,11 +30,10 @@ const AdminCards = ({currentCards, setLocalCard, localCard, setStateGlobal}) => 
                         return (
                             <div key={v1()}
                                  className={`w-auto h-8 pr-6 m-1 rounded-2xl content-start border-2 border-black text-left cursor-pointer relative `}
+                                 onClick={() => setLocalCard(t)}
                             >
                                 <div
-                                    className={`h-auto w-auto text-xl px-2 rounded-tl-2xl rounded-bl-2xl bg-gray-400 top-0 left-0 hover:bg-green-700 ${localCard && localCard._id === t._id ? "bg-green-700" : ""}`}
-                                    onClick={()=> setLocalCard(t)}
-                                >
+                                    className={`h-auto w-auto text-xl px-2 rounded-tl-2xl rounded-bl-2xl bg-gray-400 top-0 left-0 hover:bg-green-700 ${localCard && localCard._id === t._id ? "bg-green-700" : ""}`}>
                                     {t.name}
                                 </div>
                                 <span

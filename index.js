@@ -10,8 +10,10 @@ connectDB()
 
 app.use(cors())
 app.use(express.json({extended: true}))
-app.use('/api/', require('./routes/mainFull'))
-app.use('/api/auth', require('./routes/auth'))
+// app.use('/api/', require('./routes/mainFull'))
+app.use('/api/', require('./routes/ecommercefull.route'))
+app.use('/api/main', require('./routes/main'))
+app.use('/api/upload', require('./routes/upload.route'))
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
@@ -22,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
             // path.resolve(__dirname, '../', 'client', 'build', 'index.html')
             path.join(__dirname, './client/build/index.html')
         )
-    );
+    )
 } else {
     app.get('/', (req, res) => res.send('Please set to production'));
 }

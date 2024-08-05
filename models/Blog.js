@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
-const {Types} = require("mongoose")
+const slug = require('mongoose-slug-generator')
 
-const mainSchema = new mongoose.Schema({
-    owner: {
-        type: Types.ObjectId, ref: "User"
-    },
+mongoose.plugin(slug)
+
+const blogSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -13,15 +12,9 @@ const mainSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    designer: {
+    description: {
         type: String,
-        required: true,
-    },
-    paramA: [String],
-    paramB: [String],
-    paramC: [String],
-    paramD: [String]
-    ,
+    } ,
     timeCreated: {
         type: Date,
         default: () => Date.now(),
@@ -29,7 +22,13 @@ const mainSchema = new mongoose.Schema({
     img: {
         type: String,
         default: "placeholder.jpg"
-    }
+    },
+    slug: {
+        type: String,
+        slug: "title",
+        unique: true,
+        slug_padding_size: 2
+    },
 })
 
-module.exports = mongoose.model('Main', mainSchema)
+module.exports = mongoose.model('Blog', blogSchema)

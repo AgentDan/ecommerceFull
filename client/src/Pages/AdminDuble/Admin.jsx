@@ -5,7 +5,6 @@ import AdminImg from "./AdminImg"
 import Admin3dModel from "./Admin3dModel"
 import Admin3DFiles from "./Admin3dFiles"
 import axios from "axios"
-import AdminUploads from "./AdminUploads";
 
 const Admin = () => {
     const [projects, setProjects] = useState([])
@@ -18,7 +17,6 @@ const Admin = () => {
     const [localModel, setLocalModel] = useState()
     const [currentFiles, setCurrentFiles] = useState([])
     const [stateGlobal, setStateGlobal] = useState([])
-    const [stateUploads, setStateUploads] = useState([])
 
     const getCloud = useCallback(async () => {
         try {
@@ -31,8 +29,7 @@ const Admin = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [stateGlobal])
-
+    }, [])
 
     useEffect(() => {
         getCloud()
@@ -54,7 +51,7 @@ const Admin = () => {
         setCurrentImg([])
         setCurrentFiles([])
         setLocalCard([])
-    }, [currentProject])
+    }, [currentProject, stateGlobal])
 
     useEffect(() => {
         let c = []
@@ -77,11 +74,12 @@ const Admin = () => {
             })
         }
         setCurrentFiles(e)
-    }, [localModel, stateGlobal])
+    }, [localModel])
 
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-3">
+
                 <div className="m-4 w-auto h-3/4 flex flex-col ">
                     <AdminRender projects={projects}
                                  currentProject={currentProject}
@@ -103,6 +101,9 @@ const Admin = () => {
                               setLocalImg={setLocalImg}
                               getCloud={getCloud}
                     />
+                </div>
+
+                <div className="m-4 w-auto h-auto flex flex-col ">
                     <Admin3dModel localModel={localModel}
                                   currentModels={currentModels}
                                   setLocalModel={setLocalModel}
@@ -110,10 +111,6 @@ const Admin = () => {
                     <Admin3DFiles currentFiles={currentFiles}
                                   setCurrentFiles={setCurrentFiles}
                     />
-                </div>
-
-                <div className="m-4 w-auto h-auto flex flex-col ">
-                    <AdminUploads setStateUploads={setStateUploads} stateUploads={stateUploads} />
                 </div>
 
             </div>
