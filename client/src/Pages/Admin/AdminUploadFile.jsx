@@ -67,8 +67,9 @@ const AdminUploadFile = () => {
         try {
             await axios
                 .post(`/api/upload/addfile/`, formData)
-                // .then((response) => setStateUploads(response.data))
-                getCloudFiles()
+            // .then((response) => setStateUploads(response.data))
+            getCloudFiles()
+            window.location.reload(true)
         } catch (error) {
             console.log(error)
         }
