@@ -18,7 +18,7 @@ const AdminUploadFile = () => {
     }
 
     const interfile = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
 
         const formData = new FormData()
 
@@ -30,7 +30,7 @@ const AdminUploadFile = () => {
         setGroup('')
 
         axios
-            .post(`http://localhost:5000/api/upload/addfile/`, formData)
+            .post(`/api/upload/addfile/`, formData)
             .catch((error) => {
                 console.log(error)
             })
@@ -127,7 +127,7 @@ const AdminUploadFile = () => {
                     </div>
                 </Link>
                 <form className=" bg-white shadow-2xl rounded-3xl px-8 pt-6 pb-8 mb-4"
-                      onSubmit={e => e.preventDefault()}
+                      // onSubmit={e => e.preventDefault()}
                       encType="multipart/form-data">
 
                     {/*<div className="mb-4">*/}

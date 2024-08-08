@@ -1,7 +1,6 @@
 import {v1} from "uuid"
 import axios from "axios"
 import {useCallback, useContext, useEffect, useState} from "react";
-import AdminUploadFile from "./AdminUploadFile";
 
 const AdminUploads = ({localCard}) => {
     const [stateUploads, setStateUploads] = useState([])
