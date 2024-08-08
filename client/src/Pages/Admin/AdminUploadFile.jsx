@@ -68,13 +68,13 @@ const AdminUploadFile = () => {
             await axios
                 .post(`/api/upload/addfile/`, formData)
             // .then((response) => setStateUploads(response.data))
-            getCloudFiles()
-            window.location.reload(true)
+            // getCloudFiles()
+            //     .then() = console.log("HELLO")
+            // window.location.reload(true)
         } catch (error) {
             console.log(error)
         }
     })
-
     const onClickDELETE = useCallback(async (id) => {
         try {
             await axios.delete(`/api/upload/deleteblog/${id}`, {id}, {
@@ -89,8 +89,9 @@ const AdminUploadFile = () => {
     }, [getCloudFiles])
 
     useEffect(() => {
+        console.log("SDFSDF")
         getCloudFiles()
-    }, [])
+    }, [stateUploads])
 
     const rend =
         <>
