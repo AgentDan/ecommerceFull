@@ -7,9 +7,9 @@ import {Link} from "react-router-dom";
 const AdminUploadFile = () => {
     const [stateUploads, setStateUploads] = useState([])
     const [fileName, setFileName] = useState([])
-    const [check, setCheck] = useState(false)
-    const [cards, setCards] = useState('')
-    const [group, setGroup] = useState('')
+    // const [check, setCheck] = useState(false)
+    // const [cards, setCards] = useState('')
+    // const [group, setGroup] = useState('')
 
     const upload = localStorage.getItem("upload")
     const localCard = JSON.parse(upload)
@@ -18,9 +18,29 @@ const AdminUploadFile = () => {
         setFileName(e.target.files[0])
     }
 
-    const interfile = (e) => {
+    // const interfile = (e) => {
+    //     e.preventDefault()
+    //     setCheck(!check)
+    //
+    //     const formData = new FormData()
+    //
+    //     formData.append("cards", localCard.name)
+    //     formData.append("group", localCard.project)
+    //     formData.append("myfile", fileName)
+    //
+    //     setCards('')
+    //     setGroup('')
+    //
+    //     axios
+    //         .post(`/api/upload/addfile/`, formData)
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }
+
+    const interfile = useCallback(async (e) => {
         // e.preventDefault()
-        setCheck(!check)
+        // setCheck(!check)
 
         const formData = new FormData()
 
@@ -28,15 +48,17 @@ const AdminUploadFile = () => {
         formData.append("group", localCard.project)
         formData.append("myfile", fileName)
 
-        setCards('')
-        setGroup('')
+        // setCards('')
+        // setGroup('')
+        try {
+            await axios
+                .post(`/api/upload/addfile/`, formData)
+                .then((response) => setStateUploads(response.data))
 
-        axios
-            .post(`/api/upload/addfile/`, formData)
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+        } catch (error) {
+            console.log(error)
+        }
+    })
 
     const getCloudFiles = useCallback(async () => {
         try {
@@ -70,16 +92,20 @@ const AdminUploadFile = () => {
 
     const rend =
         <>
-            <div className="h-auto bg-gray-600 mt-4 rounded-bl-2xl rounded-tr-2xl text-2xl text-white text-center content-center relative">
+            <div
+                className="h-auto bg-gray-600 mt-4 rounded-bl-2xl rounded-tr-2xl text-2xl text-white text-center content-center relative">
                 {localCard.project}
-                <span className="bg-red-500 h-4 w-auto text-xs text-white text-center content-center rounded-2xl absolute top-0 left-0 px-2 ml-3 -mt-2">
+                <span
+                    className="bg-red-500 h-4 w-auto text-xs text-white text-center content-center rounded-2xl absolute top-0 left-0 px-2 ml-3 -mt-2">
                     project
                 </span>
             </div>
 
-            <div className="h-auto bg-gray-600 mt-4 rounded-bl-2xl rounded-tr-2xl text-2xl text-white text-center content-center relative">
+            <div
+                className="h-auto bg-gray-600 mt-4 rounded-bl-2xl rounded-tr-2xl text-2xl text-white text-center content-center relative">
                 {localCard.name}
-                <span className="bg-green-600 h-4 w-auto text-xs text-white text-center content-center rounded-2xl absolute top-0 left-0 px-2 ml-3 -mt-2">
+                <span
+                    className="bg-green-600 h-4 w-auto text-xs text-white text-center content-center rounded-2xl absolute top-0 left-0 px-2 ml-3 -mt-2">
                     card
                 </span>
             </div>
@@ -129,7 +155,7 @@ const AdminUploadFile = () => {
                     </div>
                 </Link>
                 <form className=" bg-white shadow-2xl rounded-3xl px-8 pt-6 pb-8 mb-4"
-                      // onSubmit={e => e.preventDefault()}
+                    // onSubmit={e => e.preventDefault()}
                       encType="multipart/form-data">
 
                     {/*<div className="mb-4">*/}

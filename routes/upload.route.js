@@ -3,8 +3,6 @@ const router = Router()
 const multer = require("multer")
 const fs = require('fs')
 const Upload = require('./../models/upload')
-const Blog = require('./../models/Blog')
-
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -22,28 +20,33 @@ router.get('/', async (request, response) => {
     response.json(upload)
 })
 
-router.post("/addfile", upload.single("myfile"), (req, res) => {
-    console.log(req.file)
-    const newBlog = new Upload({
-        cards: req.body.cards,
-        group: req.body.group,
-        description: req.body.description,
-        img: req.file.originalname
-    })
+router.post("/addfile", upload.single("myfile"), async (req, res) => {
 
-    newBlog
-        .save()
-        .then(blog => res.json("The Article ADD!!!"))
-        .catch(err => res.status(400).json(`Error my: ${err}`))
+    try {
+        const newBlog = new Upload({
+            cards: req.body.cards,
+            group: req.body.group,
+            description: req.body.description,
+            img: req.file.originalname
+        })
+        await newBlog
+            .save()
+        // .then(blog => res.json("The Article ADD!!!"))
+        // .catch(err => res.status(400).json(`Error my: ${err}`))
+        let upload = await Upload.find()
+        response.json(upload)
+    } catch (error) {
+        console.log(error)
+    }
+
+
 })
 
-router.delete('/deleteblog/:id',async (request, response)=>{
+router.delete('/deleteblog/:id', async (request, response) => {
     try {
         const blog = await Upload.findOneAndDelete({_id: request.params.id})
         let upload = await Upload.find()
-
         response.json(upload)
-        console.log(upload)
         fs.unlinkSync(`./client/public/uploads/${blog.img}`)
 
     } catch (error) {
@@ -51,16 +54,5 @@ router.delete('/deleteblog/:id',async (request, response)=>{
 
     }
 })
-
-// router.delete('/deleteblog/', async (request, response) => {
-//     try {
-//         console.log("HIHIHIHIHIH")
-//         const upload = await Upload.findOneAndDelete({_id: request.params.id})
-//         response.json(upload)
-//         fs.unlinkSync(`./client/public/uploads/${upload.img}`)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
 
 module.exports = router
