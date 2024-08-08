@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 const AdminUploadFile = () => {
     const [stateUploads, setStateUploads] = useState([])
     const [fileName, setFileName] = useState([])
+    const [check, setCheck] = useState(false)
     const [cards, setCards] = useState('')
     const [group, setGroup] = useState('')
 
@@ -19,6 +20,7 @@ const AdminUploadFile = () => {
 
     const interfile = (e) => {
         // e.preventDefault()
+        setCheck(!check)
 
         const formData = new FormData()
 
