@@ -29,12 +29,12 @@ router.post("/addfile", upload.single("myfile"), async (req, res) => {
             description: req.body.description,
             img: req.file.originalname
         })
-        await newBlog
+
+        newBlog
             .save()
-        // .then(blog => res.json("The Article ADD!!!"))
-        // .catch(err => res.status(400).json(`Error my: ${err}`))
-        let upload = await Upload.find()
-        // response.json(upload)
+            .then(blog => res.send("The Article ADD!!!"))
+            .catch(err => res.status(400).json(`Error my: ${err}`))
+
     } catch (error) {
         console.log(error)
     }
@@ -51,7 +51,6 @@ router.delete('/deleteblog/:id', async (request, response) => {
 
     } catch (error) {
         console.log(error)
-
     }
 })
 

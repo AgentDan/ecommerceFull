@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 const AdminUploadFile = () => {
     const [stateUploads, setStateUploads] = useState([])
     const [fileName, setFileName] = useState([])
+    const [message, setMessage] = useState()
     // const [check, setCheck] = useState(false)
     // const [cards, setCards] = useState('')
     // const [group, setGroup] = useState('')
@@ -26,8 +27,6 @@ const AdminUploadFile = () => {
             console.log(error)
         }
     }, [stateUploads])
-
-
     const onChangeFile = (e) => {
         setFileName(e.target.files[0])
     }
@@ -69,12 +68,14 @@ const AdminUploadFile = () => {
                 .post(`/api/upload/addfile/`, formData)
             // .then((response) => setStateUploads(response.data))
             // getCloudFiles()
-            //     .then() = console.log("HELLO")
+                .then((res) => setMessage(res.data))
             // window.location.reload(true)
         } catch (error) {
             console.log(error)
         }
     })
+
+
     const onClickDELETE = useCallback(async (id) => {
         try {
             await axios.delete(`/api/upload/deleteblog/${id}`, {id}, {
@@ -89,9 +90,9 @@ const AdminUploadFile = () => {
     }, [getCloudFiles])
 
     useEffect(() => {
-        console.log("SDFSDF")
+        console.log("SDFSF")
         getCloudFiles()
-    }, [stateUploads])
+    }, [])
 
     const rend =
         <>
