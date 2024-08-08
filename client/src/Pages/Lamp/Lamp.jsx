@@ -3,10 +3,9 @@ import React, {createContext, useCallback, useContext, useEffect, useState} from
 import {useNavigate, Link} from "react-router-dom"
 import Contacts from "../Contacts/Contacts"
 import {Menu} from "../Menu/Menu"
-import axios from "axios";
+import axios from "axios"
 
 const Lamp = ({project, currentLang}) => {
-    // const [stateFull, setStateFull] = useState(StateGlobal)
     const [stateFull, setStateFull] = useState([])
 
     const getState = useCallback(async () => {

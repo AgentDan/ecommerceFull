@@ -38,11 +38,12 @@ router.post("/addfile", upload.single("myfile"), (req, res) => {
 })
 
 router.delete('/deleteblog/:id',async (request, response)=>{
-    console.log("HELLO")
     try {
-        console.log("Params ID : ", request.params.id)
         const blog = await Upload.findOneAndDelete({_id: request.params.id})
-        response.json(blog)
+        let upload = await Upload.find()
+
+        response.json(upload)
+        console.log(upload)
         fs.unlinkSync(`./client/public/uploads/${blog.img}`)
 
     } catch (error) {

@@ -1,8 +1,15 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import {v1} from "uuid"
 import axios from "axios"
+import {useNavigate} from "react-router-dom"
 
-const AdminCards = ({currentCards, setLocalCard, localCard, setStateGlobal}) => {
+const AdminCards = ({
+                        currentCards,
+                        setStateGlobal,
+                        localCard,
+                        setLocalCard,
+                    }) => {
+    const navigate = useNavigate()
 
     const onClickDeleteCard = useCallback(async (id) => {
         try {
@@ -16,6 +23,13 @@ const AdminCards = ({currentCards, setLocalCard, localCard, setStateGlobal}) => 
         }
     }, [])
 
+    const onClickCards = (t) => {
+        const localCard = JSON.stringify(t)
+        localStorage.setItem("upload", localCard)
+        setLocalCard(t)
+        navigate('/admin197908/upload')
+    }
+
     return (
         <>
             <div
@@ -26,14 +40,14 @@ const AdminCards = ({currentCards, setLocalCard, localCard, setStateGlobal}) => 
             </div>
             <div className="text-xs text-white h-auto flex flex-wrap justify-start ">
 
-                {currentCards.map((t) => {
+                {currentCards ? currentCards.map((t) => {
                         return (
                             <div key={v1()}
                                  className={`w-auto h-8 pr-6 m-1 rounded-2xl content-start border-2 border-black text-left cursor-pointer relative `}
                             >
                                 <div
                                     className={`h-auto w-auto text-xl px-2 rounded-tl-2xl rounded-bl-2xl bg-gray-400 top-0 left-0 hover:bg-green-700 ${localCard && localCard._id === t._id ? "bg-green-700" : ""}`}
-                                    onClick={()=> setLocalCard(t)}
+                                    onClick={() => onClickCards(t)}
                                 >
                                     {t.name}
                                 </div>
@@ -46,7 +60,7 @@ const AdminCards = ({currentCards, setLocalCard, localCard, setStateGlobal}) => 
                             </div>
                         )
                     }
-                )
+                ) : ""
                 }
 
             </div>

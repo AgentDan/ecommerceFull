@@ -7,13 +7,14 @@ import Lamp from "./Pages/Lamp/Lamp";
 import Projects from "./Pages/Projects/Projects"
 import Admin from "./Pages/Admin/Admin";
 import Proba from "./Pages/Proba/Proba";
-export const MyContext = createContext()
+import AdminProba from "./Pages/Admin/AdminProba";
+import AdminUploadFile from "./Pages/Admin/AdminUploadFile";
 
 function App() {
     const [currentLang, setCurrentLang] = useState("en")
 
     return (
-        <div>
+            <div>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/"
@@ -23,13 +24,15 @@ function App() {
                         <Route path="/lamp"
                                element={<Lamp project={"light"} currentLang={currentLang}/>}/>
                         <Route path="/project/:id" element={<Projects/>}/>
-                        <Route path="/admin197908" element={<Admin/>}/>
+                        <Route path="/admin197908" element={<AdminProba/>}/>
+                        <Route path="/admin197908/info" element={<Admin/>}/>
+                        <Route path="/admin197908/upload" element={<AdminUploadFile/>}/>
                         <Route path="/proba" element={<Proba/>}/>
                         <Route path="*"
                                element={<MainPage currentLang={currentLang} setCurrentLang={setCurrentLang}/>}/>
                     </Routes>
                 </BrowserRouter>
-        </div>
+            </div>
     )
 }
 

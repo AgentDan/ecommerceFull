@@ -1,7 +1,19 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {v1} from "uuid"
 
-const AdminRender = ({projects, currentProject, setCurrentProject, setStateGlobal}) => {
+const AdminRender = (
+    {
+        projects,
+        currentProject,
+        setCurrentProject,
+    }) => {
+
+    localStorage.setItem("currentProject", currentProject)
+
+    const onClickProject = (t) => {
+        localStorage.setItem("checkCards", "1")
+        setCurrentProject(t)
+    }
 
     return (
         <>
@@ -15,7 +27,7 @@ const AdminRender = ({projects, currentProject, setCurrentProject, setStateGloba
                         <div key={v1()}
                              className={`w-auto h-8 bg-gray-400 px-4 m-1 rounded-2xl content-center border-2 border-black text-center cursor-pointer hover:bg-green-600 ${t === currentProject ? "bg-green-600 text-red-700 text-xl" : ""}`}
                              onClick={() => {
-                                 setCurrentProject(t)
+                                 onClickProject(t)
                              }}
                         >
                             {t}
