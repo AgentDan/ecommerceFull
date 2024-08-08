@@ -14,6 +14,20 @@ const AdminUploadFile = () => {
     const upload = localStorage.getItem("upload")
     const localCard = JSON.parse(upload)
 
+    const getCloudFiles = useCallback(async () => {
+        try {
+            await axios.get('/api/upload', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((response) => setStateUploads(response.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }, [stateUploads])
+
+
     const onChangeFile = (e) => {
         setFileName(e.target.files[0])
     }
@@ -53,25 +67,12 @@ const AdminUploadFile = () => {
         try {
             await axios
                 .post(`/api/upload/addfile/`, formData)
-                .then((response) => setStateUploads(response.data))
-
+                // .then((response) => setStateUploads(response.data))
+                getCloudFiles()
         } catch (error) {
             console.log(error)
         }
     })
-
-    const getCloudFiles = useCallback(async () => {
-        try {
-            await axios.get('/api/upload', {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then((response) => setStateUploads(response.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }, [stateUploads])
 
     const onClickDELETE = useCallback(async (id) => {
         try {
