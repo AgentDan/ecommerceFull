@@ -28,28 +28,13 @@ const AdminUploadFile = () => {
         }
     }, [stateUploads])
     const onChangeFile = (e) => {
-        setFileName(e.target.files[0])
+        let a = stateUploads.find(t => {return t.img === e.target.files[0].name})
+        if (a) {
+            alert("This file already exists")
+            // e.target.files = null
+        }
+        else {setFileName(e.target.files[0])}
     }
-
-    // const interfile = (e) => {
-    //     e.preventDefault()
-    //     setCheck(!check)
-    //
-    //     const formData = new FormData()
-    //
-    //     formData.append("cards", localCard.name)
-    //     formData.append("group", localCard.project)
-    //     formData.append("myfile", fileName)
-    //
-    //     setCards('')
-    //     setGroup('')
-    //
-    //     axios
-    //         .post(`/api/upload/addfile/`, formData)
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // }
 
     const interfile = useCallback(async (e) => {
         // e.preventDefault()
@@ -68,13 +53,12 @@ const AdminUploadFile = () => {
                 .post(`/api/upload/addfile/`, formData)
             // .then((response) => setStateUploads(response.data))
             // getCloudFiles()
-                .then((res) => setMessage(res.data))
+                .then((res) => window.location.reload())
             // window.location.reload(true)
         } catch (error) {
             console.log(error)
         }
     })
-
 
     const onClickDELETE = useCallback(async (id) => {
         try {
@@ -90,7 +74,6 @@ const AdminUploadFile = () => {
     }, [getCloudFiles])
 
     useEffect(() => {
-        console.log("SDFSF")
         getCloudFiles()
     }, [])
 
