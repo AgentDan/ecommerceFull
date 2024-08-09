@@ -37,8 +37,6 @@ const AdminUploadFile = () => {
     }
 
     const interfile = useCallback(async (e) => {
-        // e.preventDefault()
-        // setCheck(!check)
 
         const formData = new FormData()
 
@@ -46,15 +44,10 @@ const AdminUploadFile = () => {
         formData.append("group", localCard.project)
         formData.append("myfile", fileName)
 
-        // setCards('')
-        // setGroup('')
         try {
             await axios
                 .post(`/api/upload/addfile/`, formData)
-            // .then((response) => setStateUploads(response.data))
-            // getCloudFiles()
                 .then((res) => window.location.reload())
-            // window.location.reload(true)
         } catch (error) {
             console.log(error)
         }
@@ -142,29 +135,7 @@ const AdminUploadFile = () => {
                     </div>
                 </Link>
                 <form className=" bg-white shadow-2xl rounded-3xl px-8 pt-6 pb-8 mb-4"
-                    // onSubmit={e => e.preventDefault()}
                       encType="multipart/form-data">
-
-                    {/*<div className="mb-4">*/}
-                    {/*    <input*/}
-                    {/*        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"*/}
-                    {/*        id="username"*/}
-                    {/*        type="text"*/}
-                    {/*        placeholder="Group"*/}
-                    {/*        onChange={e => setGroup(e.target.value)}*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
-                    {/*<div className="mb-4">*/}
-                    {/*    <input*/}
-                    {/*        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"*/}
-                    {/*        id="username"*/}
-                    {/*        type="text"*/}
-                    {/*        placeholder="Cards"*/}
-                    {/*        onChange={e => setCards(e.target.value)}*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
                     <div>
                         <input
                             type="file"
