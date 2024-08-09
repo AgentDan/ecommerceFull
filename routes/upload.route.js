@@ -32,12 +32,8 @@ router.post("/addfile", upload.single("myfile"), async (req, res) => {
 
         await newBlog
             .save()
-            let upload = await Upload.find()
-            .then(blog => res.json(upload))
-            // .catch(err => res.status(400).json(`Error my: ${err}`))
-
-        // let upload = await Upload.find()
-        // response.send("HELLO")
+            .then(blog => res.send("GOOD"))
+            .catch(err => res.status(400).json(`Error my: ${err}`))
 
     } catch (error) {
         console.log(error)
