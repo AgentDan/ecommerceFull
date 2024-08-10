@@ -20,18 +20,16 @@ router.get('/', async (request, response) => {
     response.json(blog)
 })
 
-router.post("/addblog", upload.single("myfile"), (req, res) => {
-    const newBlog = new Blog({
-        title: req.body.title,
-        author: req.body.author,
-        description: req.body.description,
-        img: req.file.originalname
-    })
+router.post("/addblog", async (req, res) => {
+    try {
+        const newCard = new Blog({card: req.body.card, group: req.body.group})
+        await newCard.save()
+        res.status(201).json({message: "Data success!!!"})
 
-    newBlog
-        .save()
-        .then(blog => res.json("The Article ADD!!!"))
-        .catch(err => res.status(400).json(`Error my: ${err}`))
+    }catch (error){
+        console.log(error)
+    }
+
 })
 
 router.delete('/deleteblog/:id', async (request, response) => {

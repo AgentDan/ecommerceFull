@@ -7,10 +7,6 @@ import {Link} from "react-router-dom";
 const AdminUploadFile = () => {
     const [stateUploads, setStateUploads] = useState([])
     const [fileName, setFileName] = useState([])
-    const [message, setMessage] = useState()
-    // const [check, setCheck] = useState(false)
-    // const [cards, setCards] = useState('')
-    // const [group, setGroup] = useState('')
 
     const upload = localStorage.getItem("upload")
     const localCard = JSON.parse(upload)
@@ -31,7 +27,6 @@ const AdminUploadFile = () => {
         let a = stateUploads.find(t => {return t.img === e.target.files[0].name})
         if (a) {
             alert("This file already exists")
-            // e.target.files = null
         }
         else {setFileName(e.target.files[0])}
     }
