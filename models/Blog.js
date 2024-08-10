@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema({
     group: {
         type: String,
         required: true,
-    } ,
+    }
 })
 
 module.exports = mongoose.model('Blog', blogSchema)
