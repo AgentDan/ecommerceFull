@@ -14,6 +14,7 @@ const AdminRender = (
     const onClickProject = (t) => {
         localStorage.setItem("checkCards", "1")
         setCurrentProject(t)
+        window.location.reload()
     }
 
     return (

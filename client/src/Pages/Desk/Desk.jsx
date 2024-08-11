@@ -1,13 +1,29 @@
 import ReactCardFlip from "react-card-flip"
-import React, {createContext, useCallback, useContext, useEffect, useState} from "react"
-import {useNavigate, Link} from "react-router-dom"
+import React, {useCallback, useContext, useEffect, useState} from "react"
+import {Link} from "react-router-dom"
 import Contacts from "../Contacts/Contacts"
 import {Menu} from "../Menu/Menu"
 import axios from "axios"
 
-const Lamp = ({project, currentLang}) => {
+const Desk = ({project, currentLang}) => {
     const [stateFull, setStateFull] = useState([])
     const [stateCards, setStateCards] = useState([])
+    console.log("STATE CARDS: ", stateCards)
+
+    // const getCards = useCallback(async () => {
+    //     try {
+    //         await axios.get(`/api/cards/${currentProject}`,{
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //         })
+    //             // .then((response) => setStateGlobal(response.data))
+    //             .then((response) => console.log(response.data))
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }, [stateGlobal])
+
 
     const getState = useCallback(async () => {
         try {
@@ -149,4 +165,4 @@ const Lamp = ({project, currentLang}) => {
         </>
     )
 }
-export default Lamp
+export default Desk

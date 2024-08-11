@@ -10,8 +10,10 @@ const Admin = () => {
     const [currentCards, setCurrentCards] = useState([])
     const [localCard, setLocalCard] = useState([])
     const [stateGlobal, setStateGlobal] = useState([])
-    const [form, setForm] =useState([])
-    const [newCurrentCard, setNewCurrentCard] = useState()
+    const [form, setForm] = useState([])
+    const [error, setError] = useState()
+
+    const clearError = () => setError("")
 
     const changeHandler = (event) => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -19,13 +21,15 @@ const Admin = () => {
 
     const formHandler = async () => {
         try {
-            await axios.post('/api/main/addblog', {...form}, {
+            // await axios.post('/api/main/addblog', {...form}, {
+            await axios.post('/api/addmainfull', {...form}, {
                 headers: {'Content-Type': 'application/json'}
             })
-                .then((response)=> console.log(response.data))
+                .then(() => window.location.reload())
 
-        }catch (error) {
-            console.log(error)
+        } catch (error) {
+            setError(error.response.status)
+            setTimeout(clearError, 2000)
         }
     }
 
@@ -54,56 +58,40 @@ const Admin = () => {
         setProjects(Array.from(new Set(a)))
     }, [stateGlobal])
 
-    useEffect(() => {
-        let b = []
-        stateGlobal.map((t) => t.project === currentProject ? b.push(t) : "")
-
-        const check = localStorage.getItem("checkCards")
-        if (b.length) {
-            setCurrentCards(b)
-            localStorage.setItem('currentCards', JSON.stringify(b))
-        }
-
-        const aaa = localStorage.getItem("currentCards")
-        const bbb = JSON.parse(aaa)
-        setCurrentCards(bbb)
-
-    }, [currentProject]);
-
     return (
         <div className="grid grid-cols-1 md:grid-cols-3">
 
             <div className="h-1/3">
 
-                <form className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4"
+                <form className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4 relative"
                       onSubmit={e => e.preventDefault()}>
 
                     <div className="mb-4 h-auto">
-                        <label className="block text-gray-700 text-sm font-bold mb-2"
-                               htmlFor="username">
-                            Card
-                        </label>
+                        {/*<label className="block text-gray-700 text-sm font-bold mb-2"*/}
+                        {/*       htmlFor="username">*/}
+                        {/*    Group*/}
+                        {/*</label>*/}
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="username"
                             type="text"
-                            name="card"
-                            placeholder="card"
+                            name="project"
+                            placeholder="group"
                             onChange={changeHandler}
                         />
                     </div>
 
                     <div className="mb-4 h-auto">
-                        <label className="block text-gray-700 text-sm font-bold mb-2"
-                               htmlFor="username">
-                            Group
-                        </label>
+                        {/*<label className="block text-gray-700 text-sm font-bold mb-2"*/}
+                        {/*       htmlFor="username">*/}
+                        {/*    Card*/}
+                        {/*</label>*/}
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="username"
                             type="text"
-                            name="group"
-                            placeholder="group"
+                            name="name"
+                            placeholder="card"
                             onChange={changeHandler}
                         />
                     </div>
@@ -117,6 +105,14 @@ const Admin = () => {
                             Add
                         </button>
                     </div>
+                    <div className=" items-center justify-between h-auto">
+                        <div
+                            className={`${!error ? "hidden" : ""} bg-red-700 text-white font-bold mt-4 py-2 px-4 rounded `}
+                        >
+                            {error === 301 ? "dubble card" : ""}
+                            {error === 302 ? "dubble card111111" : ""}
+                        </div>
+                    </div>
 
                 </form>
 
@@ -128,9 +124,12 @@ const Admin = () => {
                              setCurrentProject={setCurrentProject}
                 />
                 <AdminCards currentCards={currentCards}
+                            currentProject={currentProject}
+                            stateGlobal={stateGlobal}
                             setStateGlobal={setStateGlobal}
                             localCard={localCard}
                             setLocalCard={setLocalCard}
+                            setCurrentCards={setCurrentCards}
                 />
             </div>
 

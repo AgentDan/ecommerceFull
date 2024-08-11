@@ -9,6 +9,7 @@ import Admin from "./Pages/Admin/Admin";
 import Proba from "./Pages/Proba/Proba";
 import AdminProba from "./Pages/Admin/AdminProba";
 import AdminUploadFile from "./Pages/Admin/AdminUploadFile";
+import Desk from "./Pages/Desk/Desk";
 
 function App() {
     const [currentLang, setCurrentLang] = useState("en")
@@ -23,6 +24,8 @@ function App() {
                                element={<Furniture project={"furniture"} currentLang={currentLang}/>}/>
                         <Route path="/lamp"
                                element={<Lamp project={"light"} currentLang={currentLang}/>}/>
+                        <Route path="/desk"
+                               element={<Desk project={"desk"} currentLang={currentLang}/>}/>
                         <Route path="/project/:id" element={<Projects/>}/>
                         <Route path="/admin197908" element={<AdminProba/>}/>
                         <Route path="/admin197908/info" element={<Admin/>}/>

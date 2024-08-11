@@ -1,27 +1,45 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {v1} from "uuid"
 import axios from "axios"
 import {useNavigate} from "react-router-dom"
 
 const AdminCards = ({
                         currentCards,
-                        setStateGlobal,
                         localCard,
+                        currentProject,
                         setLocalCard,
+                        setCurrentCards
                     }) => {
     const navigate = useNavigate()
+
+    const getCards = useCallback(async () => {
+        try {
+            await axios.get(`/api/cards/${currentProject}`,{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((response) => setCurrentCards(response.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
 
     const onClickDeleteCard = useCallback(async (id) => {
         try {
             await axios.delete(`/api/delcard/${id}`, {id}, {
                 headers: {'Content-Type': 'application/json'}
             })
-                // .then((response) => console.log(response.data))
-                .then((response) => setStateGlobal(response.data))
+                .then((response) => setCurrentCards(response.data))
+
         } catch (error) {
             console.log(error)
         }
     }, [])
+
+    useEffect(()=>{
+        getCards()
+    }, [currentProject])
 
     const onClickCards = (t) => {
         const localCard = JSON.stringify(t)

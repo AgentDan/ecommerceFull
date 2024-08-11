@@ -22,7 +22,25 @@ router.get('/', async (request, response) => {
 
 router.post("/addblog", async (req, res) => {
     try {
-        const newCard = new Blog({card: req.body.card, group: req.body.group})
+        const name = req.body.name
+        const isUsed = await Blog.findOne({name})
+        if (isUsed) {
+            return res.status(301).json({message: "MY Error!!!!!!!!!!"})
+        }
+
+        const newCard = new Blog({
+            name: req.body.name,
+            project: req.body.project,
+            price: req.body.price,
+            nameEN: req.body.nameEN,
+            nameRS: req.body.nameRS,
+            nameRU: req.body.nameRU,
+            imagesCounter: req.body.imagesCounter,
+            images: req.body.images,
+            check: req.body.check,
+            components: req.body.components,
+        })
+
         await newCard.save()
         res.status(201).json({message: "Data success!!!"})
 

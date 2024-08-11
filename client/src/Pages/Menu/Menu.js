@@ -50,6 +50,17 @@ export const Menu = ({currentLang}) => {
                     </div>
 
                     <div className={'h-6 w-auto cursor-pointer text-xl'}>
+                        <Link to={"/desk"}
+                              className="hover:text-red-700 hover:text-3xl"
+                        >
+                            {currentLang === "en" ? "Desk" : ""}
+                            {currentLang === "rs" ? "Sto" : ""}
+                            {currentLang === "ru" ? "Стол" : ""}
+                        </Link>
+                    </div>
+
+
+                    <div className={'h-6 w-auto cursor-pointer text-xl'}>
                         <Link to={"/furniture"}
                               className="hover:text-red-700 hover:text-3xl"
                         >
