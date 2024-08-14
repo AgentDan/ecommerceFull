@@ -47,7 +47,6 @@ router.post("/addblog", async (req, res) => {
     }catch (error){
         console.log(error)
     }
-
 })
 
 router.delete('/deleteblog/:id', async (request, response) => {

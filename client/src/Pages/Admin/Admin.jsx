@@ -19,7 +19,9 @@ const Admin = () => {
         setForm({...form, [event.target.name]: event.target.value})
     }
 
+
     const formHandler = async () => {
+        console.log("FORM : ", form)
         try {
             // await axios.post('/api/main/addblog', {...form}, {
             await axios.post('/api/addmainfull', {...form}, {
